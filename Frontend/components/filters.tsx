@@ -21,7 +21,7 @@ export default function Filters() {
 
   return (
     <div className="bg-card border rounded-lg p-4 sticky top-4">
-      <div className="mb-6">
+      <div className="mb-4">
         <div className="relative">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input type="search" placeholder="Search models..." className="pl-8" />
@@ -51,7 +51,7 @@ export default function Filters() {
         <AccordionItem value="rating">
           <AccordionTrigger>Rating</AccordionTrigger>
           <AccordionContent>
-            <div className="space-y-4">
+            <div className="space-y-4 mt-2">
               <Slider defaultValue={[0, 5]} max={5} step={0.1} value={ratingRange} onValueChange={setRatingRange} />
               <div className="flex justify-between">
                 <span className="text-sm">{ratingRange[0].toFixed(1)}</span>

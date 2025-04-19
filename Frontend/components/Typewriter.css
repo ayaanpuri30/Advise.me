@@ -1,0 +1,21 @@
+/* Converted from Typewriter.scss to plain CSS */
+.typewriter {
+  font-weight: bold;
+  position: relative;
+  margin-bottom: 5vh;
+}
+
+.typewriter::before {
+  content: ">\00a0";
+}
+
+.typewriter span {
+  background-color: rgb(31, 30, 30);
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    background-color: transparent;
+  }
+} 

@@ -7,29 +7,29 @@ export default function BrowsePage() {
   // This would typically come from a database or API
   const models = [
     {
-      title: "Image Generator",
-      description: "Create stunning images with our AI model",
+      title: "Albert",
+      description: "I'm an old man",
       rating: 4.8,
       imageSrc: "/images/old.webp",
       category: "Image",
     },
     {
-      title: "Text Completion",
-      description: "Advanced text generation for any use case",
+      title: "Code Assistant",
+      description: "Get help with coding tasks and debugging.",
       rating: 4.5,
       imageSrc: "/images/girl.webp",
       category: "Text",
     },
     {
-      title: "Code Assistant",
-      description: "Get help with coding tasks and debugging",
+      title: "Artist",
+      description: "Explore creative ideas and get inspired.",
       rating: 4.9,
       imageSrc: "/images/artist.webp",
       category: "Code",
     },
     {
-      title: "Voice Synthesis",
-      description: "Natural-sounding voice generation",
+      title: "Dr. Magnus",
+      description: "Got a stomach ache?",
       rating: 4.6,
       imageSrc: "/images/hat.webp",
       category: "Audio",
