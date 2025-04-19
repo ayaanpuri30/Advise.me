@@ -3,31 +3,53 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 from google.cloud import aiplatform, speech, texttospeech
+from google.cloud import aiplatform    # still fine
+from google.cloud.speech_v1 import SpeechClient
+from google.cloud.texttospeech_v1 import TextToSpeechClient
 import uuid, base64
 from werkzeug.utils import secure_filename
+import google.generativeai as genai
+
+from google import genai
+
 import io
 
 # Load environment variables
-dotenv_path = os.getenv('DOTENV_PATH', None)
-if dotenv_path:
-    load_dotenv(dotenv_path)
-else:
-    load_dotenv()
+# dotenv_path = os.getenv('DOTENV_PATH', None)
+# if dotenv_path:
+#     load_dotenv(dotenv_path)
+# else:
+#     load_dotenv()
+
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY not set in environment")
+
+client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 # Initialize Flask and CORS
 app = Flask(__name__)
 CORS(app, origins=os.getenv("FRONTEND_ORIGIN"))
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'speechtotext-434102-68275541f3c5copy.json'
+
+KEY_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "hackathon/Backend/speechtotext-434102-68275541f3c5copy.json")
+
+
 # Initialize Google Cloud clients
-speech_client = speech.SpeechClient()
-tts_client    = texttospeech.TextToSpeechClient()
+print("KEYPATH", KEY_PATH)
+speech_client = SpeechClient.from_service_account_file(KEY_PATH)
+tts_client    = TextToSpeechClient.from_service_account_file(KEY_PATH)
 aiplatform.init(
     project=os.getenv("PROJECT_ID"),
     location=os.getenv("LOCATION")
 )
 # Load Gemini (Vertex AI Text Generation) model
-model = aiplatform.TextGenerationModel.from_pretrained("text-bison@001")
-
+client = genai.Client(api_key=GEMINI_API_KEY)
+#gemini_model = genai.GenerativeModel("gemini-pro")
 # Helper: transcribe audio file (IN-MEMORY)
 def transcribe_audio(audio_file):
     """
@@ -84,15 +106,15 @@ def chat():
     prompt = f"{system_prompt}User: {user_message}\nBot:"
 
     # Call the text generation model
-    response = model.predict(
-        prompt,
-        temperature=0.2,
-        max_output_tokens=512,
-    )
-    reply = response.text.strip()
 
-    return jsonify({"reply": reply})
+    response = (client.models.generate_content(model="gemini-2.0-flash",contents=[prompt]))
+
+    # gen_resp = gemini_model.generate_content(prompt)
+    # reply = response.text.strip()
+
+
+    return jsonify({"reply": response.text})
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
+    port = int(os.getenv("PORT", 5001))
     app.run(host="0.0.0.0", port=port, debug=True)
