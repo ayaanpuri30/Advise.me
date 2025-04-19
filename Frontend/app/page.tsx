@@ -10,26 +10,26 @@ export default function Home() {
         <HeroSection />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-auto mb-8">
           <ModelCard
-            title="Image Generator"
-            description="Create stunning images with our AI model"
+            title="Albert"
+            description="I'm an old man"
             rating={4.8}
             imageSrc="/images/old.webp"
           />
           <ModelCard
-            title="Text Completion"
-            description="Advanced text generation for any use case"
+            title="Code Assistant"
+            description="Get help with coding tasks and debugging."
             rating={4.5}
             imageSrc="/images/girl.webp"
           />
           <ModelCard
-            title="Code Assistant"
-            description="Get help with coding tasks and debugging"
+            title="Artist"
+            description="Explore creative ideas and get inspired."
             rating={4.9}
             imageSrc="/images/artist.webp"
           />
           <ModelCard
-            title="Voice Synthesis"
-            description="Natural-sounding voice generation"
+            title="Dr. Magnus"
+            description="Got a chess piece stuck in your tummy?"
             rating={4.6}
             imageSrc="/images/hat.webp"
           />
