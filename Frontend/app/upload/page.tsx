@@ -17,17 +17,16 @@ export default function UploadPage() {
   }
 
   const traitLabels = [
-    { name: "Trait 1", left: "TraitLeft0", right: "TraitRight0" },
-    { name: "Trait 2", left: "TraitLeft1", right: "TraitRight1" },
-    { name: "Trait 3", left: "TraitLeft2", right: "TraitRight2" },
-    { name: "Trait 4", left: "TraitLeft3", right: "TraitRight3" },
+    { name: "Brevity", left: "Concise", right: "Detailed" },
+    { name: "Tone", left: "Blunt", right: "Indirect" },
+    { name: "Professionalism", left: "Casual", right: "Professional" },
   ]
 
   return (
     <main className="min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-1 flex flex-col px-4 md:px-6 py-6 max-w-7xl mx-auto w-full">
-        <h1 className="text-3xl font-bold tracking-tight mb-6">Upload Your Model</h1>
+        <h1 className="text-2xl font-bold tracking-tight mt-4 mb-6">Upload Your Model</h1>
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left side - Trait sliders */}
@@ -52,24 +51,45 @@ export default function UploadPage() {
                       </div>
                     </div>
                   ))}
-
-                  <div className="flex gap-4 pt-4">
-                    <Button variant="outline" className="flex-1">
-                      Upload Model
-                    </Button>
-                    <Button className="flex-1">Submit</Button>
+                  <div className="space-y-4 mt-8">
+                    <div>
+                      <label htmlFor="modelName" className="block text-sm font-medium text-muted-foreground mb-1">Name</label>
+                      <input id="modelName" type="text" placeholder="Enter name" className="w-full border rounded-md p-2" />
+                    </div>
+                    <div>
+                      <label htmlFor="modelDescription" className="block text-sm font-medium text-muted-foreground mb-1">Description</label>
+                      <textarea id="modelDescription" rows={3} placeholder="Enter description" className="w-full border rounded-md p-2"></textarea>
+                    </div>
                   </div>
+                </div>
+                <div className="w-full mt-4 md:w-2/3 flex gap-4">
+                <Button variant="outline" className="flex-1">Upload Model</Button>
+                <Button className="flex-1">Submit</Button>
                 </div>
               </CardContent>
             </Card>
           </div>
 
           {/* Right side - Image */}
-          <div className="md:w-1/3 flex justify-center">
-            <div className="relative h-[500px] w-full max-w-[300px] overflow-hidden rounded-lg">
-              <Image src="/images/landscape.jpeg" alt="Model visualization" fill className="object-cover" priority />
+            <div className="w-1/2">
+              <div className="relative w-full h-[500px] overflow-hidden rounded-lg">
+                <Image src="/images/custom.png" alt="Model visualization" fill className="object-cover" priority />
+              </div>
+              <div className="flex gap-2 mt-4">
+                <Button variant="outline" className="flex-1">Customize Appearance</Button>
+                <Button className="flex-1">Reset</Button>
+              </div>
             </div>
-          </div>
+        </div>
+        <div className="flex flex-col md:flex-row gap-8 mt-4">
+          {/* <div className="w-full md:w-2/3 flex gap-4">
+            <Button variant="outline" className="flex-1">Upload Model</Button>
+            <Button className="flex-1">Submit</Button>
+          </div> */}
+          {/* <div className="md:w-1/3 flex gap-4 max-w-[300px]">
+            <Button variant="outline" className="flex-1">Customize Appearance</Button>
+            <Button className="flex-1">Reset</Button>
+          </div> */}
         </div>
       </div>
     </main>

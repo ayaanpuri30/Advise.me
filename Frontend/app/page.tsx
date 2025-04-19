@@ -29,7 +29,7 @@ export default function Home() {
           />
           <ModelCard
             title="Dr. Magnus"
-            description="Got a chess piece stuck in your tummy?"
+            description="Got a stomach ache?"
             rating={4.6}
             imageSrc="/images/hat.webp"
           />

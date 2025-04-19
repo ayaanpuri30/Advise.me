@@ -2,6 +2,7 @@ import { MessageSquare, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
+import Link from "next/link"
 
 interface ModelCardProps {
   title: string
@@ -20,10 +21,12 @@ export default function ModelCard({ title, description, rating, imageSrc }: Mode
         <p className="text-muted-foreground">{description}</p>
       </CardContent>
       <CardFooter className="flex items-center relative">
-        <Button variant="ghost" size="sm" className="p-0 h-8">
-          <MessageSquare className="h-4 w-4" />
-          <span className="text-xs">Message</span>
-        </Button>
+        <Link href={`/chat?cardTitle=${encodeURIComponent(title)}`} className="no-underline">
+          <Button variant="ghost" size="sm" className="p-0 h-8">
+            <MessageSquare className="h-4 w-4" />
+            <span className="text-xs">Message</span>
+          </Button>
+        </Link>
         <div className="flex items-center ml-auto mr-16">
           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
           <span className="text-sm font-medium">{rating.toFixed(1)}</span>

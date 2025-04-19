@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useSearchParams } from "next/navigation"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -26,6 +27,9 @@ export default function ChatPage() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  const searchParams = useSearchParams()
+  const cardTitle = searchParams.get("cardTitle") ?? ""
 
   const handleSendMessage = () => {
     if (!input.trim()) return
@@ -62,6 +66,7 @@ export default function ChatPage() {
   return (
     <main className="min-h-screen flex flex-col">
       <Navbar />
+      {cardTitle && <p className="text-center text-sm text-muted-foreground mb-4">Chat for: {cardTitle}</p>}
       <div className="flex-1 flex flex-col px-4 md:px-6 py-6 max-w-3xl mx-auto w-full">
         <Card className="flex-1 flex flex-col">
           <CardHeader>
