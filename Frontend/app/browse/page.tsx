@@ -2,68 +2,9 @@ import Navbar from "@/components/navbar"
 import Filters from "@/components/filters"
 import ModelCard from "@/components/model-card"
 import { Button } from "@/components/ui/button"
+import { agents } from "@/agents"
 
 export default function BrowsePage() {
-  // This would typically come from a database or API
-  const models = [
-    {
-      title: "Albert",
-      description: "I'm an old man",
-      rating: 4.8,
-      imageSrc: "/images/old.webp",
-      category: "Image",
-    },
-    {
-      title: "Code Assistant",
-      description: "Get help with coding tasks and debugging.",
-      rating: 4.5,
-      imageSrc: "/images/girl.webp",
-      category: "Text",
-    },
-    {
-      title: "Artist",
-      description: "Explore creative ideas and get inspired.",
-      rating: 4.9,
-      imageSrc: "/images/artist.webp",
-      category: "Code",
-    },
-    {
-      title: "Dr. Magnus",
-      description: "Got a stomach ache?",
-      rating: 4.6,
-      imageSrc: "/images/hat.webp",
-      category: "Audio",
-    },
-    {
-      title: "Image Classifier",
-      description: "Identify objects and scenes in images",
-      rating: 4.3,
-      imageSrc: "/images/old.webp",
-      category: "Image",
-    },
-    {
-      title: "Language Translator",
-      description: "Translate text between multiple languages",
-      rating: 4.7,
-      imageSrc: "/images/girl.webp",
-      category: "Text",
-    },
-    {
-      title: "Data Analyzer",
-      description: "Extract insights from complex datasets",
-      rating: 4.4,
-      imageSrc: "/images/artist.webp",
-      category: "Data",
-    },
-    {
-      title: "Speech Recognition",
-      description: "Convert spoken language into written text",
-      rating: 4.2,
-      imageSrc: "/images/hat.webp",
-      category: "Audio",
-    },
-  ]
-
   return (
     <main className="min-h-screen flex flex-col">
       <Navbar />
@@ -84,7 +25,7 @@ export default function BrowsePage() {
           {/* Main content */}
           <div className="flex-1">
             <div className="flex justify-between items-center mb-6">
-              <p className="text-sm text-muted-foreground">Showing {models.length} models</p>
+              <p className="text-sm text-muted-foreground">Showing {agents.length} models</p>
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Sort by:</span>
                 <Button variant="outline" size="sm">
@@ -94,13 +35,13 @@ export default function BrowsePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {models.map((model, index) => (
+              {agents.map((agent) => (
                 <ModelCard
-                  key={index}
-                  title={model.title}
-                  description={model.description}
-                  rating={model.rating}
-                  imageSrc={model.imageSrc}
+                  key={agent.id}
+                  title={agent.title}
+                  description={agent.description}
+                  rating={agent.rating}
+                  imageSrc={agent.imageSrc}
                 />
               ))}
             </div>
