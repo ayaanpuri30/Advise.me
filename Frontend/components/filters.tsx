@@ -7,17 +7,13 @@ import { Slider } from "@/components/ui/slider"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Search } from "lucide-react"
+import { agents } from "@/data/agents"
 
 export default function Filters() {
   const [ratingRange, setRatingRange] = useState([0, 5])
 
-  const categories = [
-    { id: "image", label: "Image" },
-    { id: "text", label: "Text" },
-    { id: "audio", label: "Audio" },
-    { id: "code", label: "Code" },
-    { id: "data", label: "Data" },
-  ]
+  const uniqueCategories = Array.from(new Set(agents.map(agent => agent.category).filter((cat): cat is string => cat !== undefined)));
+  const categories = uniqueCategories.map(cat => ({ id: cat.toLowerCase(), label: cat }));
 
   return (
     <div className="bg-card border rounded-lg p-4 sticky top-4">

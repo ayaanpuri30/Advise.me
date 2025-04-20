@@ -18,6 +18,8 @@ export default function Home() {
               description={agent.description}
               rating={agent.rating}
               imageSrc={agent.imageSrc}
+              verified={agent.verified}
+              category={agent.category}
             />
           ))}
         </div>

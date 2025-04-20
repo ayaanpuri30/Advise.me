@@ -5,40 +5,44 @@ export interface Agent {
   rating: number;
   imageSrc?: string;
   category?: string;
+  verified?: boolean;
 }
 
 export const agents: Agent[] = [
   {
     id: 0,
-    title: "Albert",
-    description: "I'm an old man",
-    rating: 4.8,
+    title: "Albert (Uncle Al)",
+    description: "I'm an old man who loves to chat about the past.",
+    rating: 5,
     imageSrc: "/images/old.webp",
-    category: "Image",
+    category: "Leisure",
   },
   {
     id: 1,
-    title: "Code Assistant",
-    description: "Get help with coding tasks and debugging.",
+    title: "Developer Sara",
+    description: "Need help finishing up that python script?",
     rating: 4.5,
     imageSrc: "/images/girl.webp",
-    category: "Text",
+    category: "Coding",
+    verified: true,
   },
   {
     id: 2,
-    title: "Artist",
+    title: "Painter Matt",
     description: "Explore creative ideas and get inspired.",
-    rating: 4.9,
+    rating: 4.7,
     imageSrc: "/images/artist.webp",
-    category: "Code",
+    category: "Creativity",
+    verified: true,
   },
   {
     id: 3,
     title: "Dr. Magnus",
-    description: "Got a stomach ache?",
+    description: "Got a stomach ache? I have a big hat and a bigger description.",
     rating: 4.6,
     imageSrc: "/images/hat.webp",
-    category: "Audio",
+    category: "Health",
+    verified: true,
   },
   {
     id: 4,

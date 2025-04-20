@@ -9,11 +9,16 @@ export default function BrowsePage() {
     <main className="min-h-screen flex flex-col">
       <Navbar />
       <div className="flex-1 flex flex-col px-4 md:px-6 py-6 max-w-7xl mx-auto w-full">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-bold tracking-tight">Browse Models</h1>
-          <p className="text-muted-foreground">
-            Discover and explore our collection of AI models for various applications
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-3xl font-bold tracking-tight">Explore Advisors</h1>
+          <div className="flex items-center gap-2 mt-4 sm:mt-0">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-muted-foreground">Sort by:</span>
+              <Button variant="outline" size="sm">
+                Popularity
+              </Button>
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 flex flex-col lg:flex-row gap-8">
@@ -24,16 +29,6 @@ export default function BrowsePage() {
 
           {/* Main content */}
           <div className="flex-1">
-            <div className="flex justify-between items-center mb-6">
-              <p className="text-sm text-muted-foreground">Showing {agents.length} models</p>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Sort by:</span>
-                <Button variant="outline" size="sm">
-                  Popularity
-                </Button>
-              </div>
-            </div>
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {agents.map((agent) => (
                 <ModelCard
@@ -43,6 +38,8 @@ export default function BrowsePage() {
                   description={agent.description}
                   rating={agent.rating}
                   imageSrc={agent.imageSrc}
+                  verified={agent.verified}
+                  category={agent.category}
                 />
               ))}
             </div>

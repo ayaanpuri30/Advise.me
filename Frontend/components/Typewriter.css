@@ -1,16 +1,22 @@
 /* Converted from Typewriter.scss to plain CSS */
+:root {
+  --blue: rgb(79, 100, 204);
+}
+
 .typewriter {
   font-weight: bold;
   position: relative;
   margin-bottom: 5vh;
+  color: var(--blue);
 }
 
 .typewriter::before {
   content: ">\00a0";
+  color: var(--blue);
 }
 
 .typewriter span {
-  background-color: rgb(31, 30, 30);
+  background-color: var(--blue);
   animation: caret 1s steps(1) infinite;
 }
 

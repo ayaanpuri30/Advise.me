@@ -6,7 +6,7 @@
       "rating": 4.8,
       "imageSrc": "/images/old.webp",
       "category": "Image",
-      "systemPropmt": "Your name is Albert. You are a old man. Please answer all questions like you are an old man named albert."
+      "systemPropmt": "Your name is Albert. You are a wise, sweet, old man. Please answer all questions like you are an old man named albert."
     },
     {
       "id": 1,

@@ -2,14 +2,16 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useSearchParams } from "next/navigation"
 import Navbar from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar } from "@/components/ui/avatar"
-import { SendIcon } from "lucide-react"
+import { SendIcon, Plus } from "lucide-react"
+import Image from "next/image"
+import { agents } from "@/data/agents"
 
 interface Message {
   id: number
@@ -32,6 +34,24 @@ export default function ChatPage() {
   const searchParams = useSearchParams()
   const cardTitle = searchParams.get("cardTitle") ?? ""
   const agentId = searchParams.get("agentId") ?? ""
+  const agent = agents.find(a => a.id.toString() === agentId);
+  //console.log(agents)
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      console.log("Files selected:", files);
+      // Handle file attachments here
+    }
+  };
 
   const handleSendMessage = () => {
     if (!input.trim()) return
@@ -79,11 +99,21 @@ export default function ChatPage() {
   return (
     <main className="min-h-screen flex flex-col">
       <Navbar />
-      {agentId && <p className="text-center text-sm text-muted-foreground mb-4">Chat for: {agentId}</p>}
       <div className="flex-1 flex flex-col px-4 md:px-6 py-6 max-w-3xl mx-auto w-full">
         <Card className="flex-1 flex flex-col">
           <CardHeader>
-            <CardTitle>AI Chat Assistant</CardTitle>
+            <div className="flex items-center space-x-2">
+              <Avatar className="h-8 w-8">
+                {agent && agent.imageSrc ? (
+                  <Image src={agent.imageSrc} alt={agent.title} width={32} height={32} className="rounded-full object-cover" />
+                ) : (
+                  <div className="rounded-full bg-muted text-muted-foreground h-full w-full flex items-center justify-center">
+                    {agent ? agent.title.charAt(0) : "A"}
+                  </div>
+                )}
+              </Avatar>
+              <CardTitle className="text-xl font-bold">{agent ? agent.title : "Agent"}</CardTitle>
+            </div>
           </CardHeader>
           <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message) => (
@@ -136,11 +166,15 @@ export default function ChatPage() {
                 placeholder="Type your message..."
                 className="flex-1"
               />
+              <Button onClick={handleFileUpload} variant="outline" className="p-2">
+                <Plus className="h-4 w-4" />
+              </Button>
               <Button onClick={handleSendMessage} disabled={isLoading || !input.trim()}>
                 <SendIcon className="h-4 w-4" />
                 <span className="sr-only">Send</span>
               </Button>
             </div>
+            <input type="file" multiple accept=".pdf,.txt,.mp3,.wav,.mp4,image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
           </CardFooter>
         </Card>
       </div>
