@@ -79,25 +79,6 @@ def extract_text_from_files(files):
 
     return "\n".join(text_chunks)
 
-# Initialize Google Cloud clients
-# def transcribe_audio(blob: bytes) -> str:
-#     cfg = speech_client.RecognitionConfig(
-#         encoding=speech_client.RecognitionConfig.AudioEncoding.LINEAR16,
-#         sample_rate_hertz=48000,
-#         language_code="en-US"
-#     )
-#     audio = speech_client.RecognitionAudio(content=blob)
-#     resp = speech_client.recognize(config=cfg, audio=audio)
-#     return " ".join(r.alternatives[0].transcript for r in resp.results)
-
-
-# def first_frame(video_bytes: bytes) -> bytes:
-#     with tempfile.NamedTemporaryFile(suffix=".mp4") as vf, tempfile.NamedTemporaryFile(suffix=".png") as pf:
-#         vf.write(video_bytes); vf.flush()
-#         subprocess.run(["ffmpeg", "-i", vf.name, "-vframes", "1", pf.name, "-y", "-loglevel", "error"], check=True)
-#         pf.seek(0)
-#         return pf.read()
-
 
 def get_system_prompt(agent_id: str) -> str:
 

@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar } from "@/components/ui/avatar"
-import { SendIcon, Plus } from "lucide-react"
+import { SendIcon, Plus, FileText } from "lucide-react"
+import ReactMarkdown from "react-markdown"
 import Image from "next/image"
 import { agents } from "@/data/agents"
 
@@ -17,6 +18,7 @@ interface Message {
   id: number
   content: string
   sender: "user" | "bot"
+  files?: File[];
 }
 
 export default function ChatPage() {
@@ -29,10 +31,9 @@ export default function ChatPage() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-  //const [agentId, setAgentId] = useState('defaultAgentId')
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
 
   const searchParams = useSearchParams()
-  const cardTitle = searchParams.get("cardTitle") ?? ""
   const agentId = searchParams.get("agentId") ?? ""
   const agent = agents.find(a => a.id.toString() === agentId);
   //console.log(agents)
@@ -49,7 +50,7 @@ export default function ChatPage() {
     const files = e.target.files;
     if (files && files.length > 0) {
       console.log("Files selected:", files);
-      // Handle file attachments here
+      setUploadedFiles(Array.from(files));
     }
   };
 
@@ -61,17 +62,24 @@ export default function ChatPage() {
       id: messages.length + 1,
       content: input,
       sender: "user",
+      files: uploadedFiles.length > 0 ? uploadedFiles : undefined,
     }
     setMessages((prev) => [...prev, userMessage])
     setInput("")
     setIsLoading(true)
 
-    console.log(JSON.stringify({ message: input, agentId: agentId }))
-    // Make API request to bot endpoint
+    console.log(`Sending form data: message=${input}, agentId=${agentId}`)
+    // Make API request to bot endpoint using form data
+    const formData = new FormData();
+    formData.append("message", input);
+    formData.append("agentId", agentId);
+
+    // Append uploaded files if any from state
+    uploadedFiles.forEach(file => formData.append("files", file));
+
     fetch("http://127.0.0.1:5001/chat", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message: input, agentId: agentId })
+      body: formData
     })
     .then(response => response.json())
     .then(data => {
@@ -82,6 +90,7 @@ export default function ChatPage() {
       }
       setMessages((prev) => [...prev, botMessage])
       setIsLoading(false)
+      setUploadedFiles([])
     })
     .catch(error => {
       console.error("Error during chat API request:", error);
@@ -118,28 +127,25 @@ export default function ChatPage() {
           <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`flex max-w-[80%] ${
-                    message.sender === "user" ? "flex-row-reverse" : "flex-row"
-                  } items-start gap-2`}
-                >
-                  <Avatar className="h-8 w-8">
-                    <div
-                      className={`h-full w-full flex items-center justify-center ${
-                        message.sender === "user" ? "bg-primary" : "bg-muted"
-                      }`}
-                    >
-                      {message.sender === "user" ? "U" : "AI"}
-                    </div>
-                  </Avatar>
-                  <div
-                    className={`rounded-lg px-4 py-2 ${
-                      message.sender === "user"
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground"
-                    }`}
-                  >
-                    <p>{message.content}</p>
+                <div className="max-w-[80%]">
+                  <div className={`rounded-lg px-4 py-2 ${message.sender === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
+                    {message.sender === "bot" ? (
+                      <div className="break-words whitespace-normal">
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <p className="break-words whitespace-normal">{message.content}</p>
+                    )}
+                    {message.files && message.files.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {message.files.map((file, index) => (
+                          <div key={index} className="flex items-center space-x-1 border rounded px-2 py-1 text-sm">
+                            <FileText className="h-4 w-4" />
+                            <span className="truncate max-w-[150px]">{file.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -157,7 +163,17 @@ export default function ChatPage() {
               </div>
             )}
           </CardContent>
-          <CardFooter className="border-t p-4">
+          <CardFooter className="border-t flex flex-col p-4">
+            {uploadedFiles.length > 0 && (
+              <div className="mb-2 flex flex-wrap gap-2">
+                {uploadedFiles.map((file, index) => (
+                  <div key={index} className="flex items-center space-x-1 border rounded px-2 py-1 text-sm">
+                    <FileText className="h-4 w-4" />
+                    <span className="truncate max-w-[150px]">{file.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
             <div className="flex w-full items-center space-x-2">
               <Input
                 value={input}
@@ -174,7 +190,7 @@ export default function ChatPage() {
                 <span className="sr-only">Send</span>
               </Button>
             </div>
-            <input type="file" multiple accept=".pdf,.txt,.mp3,.wav,.mp4,image/*" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
+            <input type="file" multiple accept=".pdf,.txt" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
           </CardFooter>
         </Card>
       </div>
