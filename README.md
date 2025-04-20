@@ -16,23 +16,16 @@ Share new Advisors with the community—just describe the persona and upload sta
 Drive AI literacy in under‑represented communities while contributing to a social‑good mission.
 
 🏗 How we built it
-
 Layer	Tech	Notes
 Frontend	Next.js 13, React 18, Tailwind CSS	Instant feedback & pre‑rendered Advisor gallery
 Backend	Python Flask, Gunicorn	Thin API: /chat endpoint handles text, PDF/TXT extraction + audio transcription
 AI	Google Gemini API	Prompt‑engineering for persona control; inline & Files‑API for audio
 Storage	Local FS / Cloud Storage	Separate buckets for images/, docs/, audio/
 Inspiration	Hugging Face	We re‑imagined the model hub as a consumer hub
+
 🖼 Architecture
-┌──────────────┐          POST /chat          ┌──────────────┐
-|  Frontend    | ───────────────────────────▶ |   Flask API  |
-|  (Next.js)   |                             |  (Gunicorn)  |
-└──────────────┘ ◀─────────────────────────── └──────────────┘
-     ▲  ▲         JSON reply (Advisor)             │
-     │  │                                         ┌▼──────────┐
-Upload files (img/pdf/txt/wav/mp3)                |  Gemini   |
-                                                  |  API      |
-                                                  └───────────┘
+NextJS frontend, Flask backend, Gemini API
+
 🚧 Current limitations
 Hackathon build uses prompt engineering + Gemini rather than custom‑trained models.
 
