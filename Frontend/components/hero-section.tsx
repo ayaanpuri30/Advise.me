@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 export default function HeroSection() {
   return (
     <div className="flex flex-col items-center mt-8 text-center md:py-16">
-      <Typewriter text="AI App Store" className="text-9xl font-bold tracking-tighter mb-4" />
+      <Typewriter text="AID.ai" className="text-9xl font-bold tracking-tighter mb-4" />
       <p className="text-muted-foreground max-w-[600px] mb-8">
         Come enjoy a conversational experience with our commmunity-based personal AI advisors. Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah.
       </p>

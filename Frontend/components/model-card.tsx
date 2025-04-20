@@ -22,7 +22,7 @@ export default function ModelCard({ id, title, description, rating, imageSrc }: 
         <p className="text-muted-foreground">{description}</p>
       </CardContent>
       <CardFooter className="flex items-center relative">
-        <Link href={`/chat?cardId=${id}`} className="no-underline">
+        <Link href={`/chat?agentId=${id}`} className="no-underline">
           <Button variant="ghost" size="sm" className="p-0 h-8">
             <MessageSquare className="h-4 w-4" />
             <span className="text-xs">Message</span>

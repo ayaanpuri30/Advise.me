@@ -38,6 +38,7 @@ export default function BrowsePage() {
               {agents.map((agent) => (
                 <ModelCard
                   key={agent.id}
+                  id={agent.id}
                   title={agent.title}
                   description={agent.description}
                   rating={agent.rating}

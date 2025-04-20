@@ -27,9 +27,11 @@ export default function ChatPage() {
   ])
   const [input, setInput] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  //const [agentId, setAgentId] = useState('defaultAgentId')
 
   const searchParams = useSearchParams()
   const cardTitle = searchParams.get("cardTitle") ?? ""
+  const agentId = searchParams.get("agentId") ?? ""
 
   const handleSendMessage = () => {
     if (!input.trim()) return
@@ -44,16 +46,27 @@ export default function ChatPage() {
     setInput("")
     setIsLoading(true)
 
-    // Simulate bot response
-    setTimeout(() => {
+    console.log(JSON.stringify({ message: input, agentId: agentId }))
+    // Make API request to bot endpoint
+    fetch("http://127.0.0.1:5001/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input, agentId: agentId })
+    })
+    .then(response => response.json())
+    .then(data => {
       const botMessage: Message = {
         id: messages.length + 2,
-        content: `I received your message: "${input}". This is a placeholder response.`,
+        content: data.reply,
         sender: "bot",
       }
       setMessages((prev) => [...prev, botMessage])
       setIsLoading(false)
-    }, 1000)
+    })
+    .catch(error => {
+      console.error("Error during chat API request:", error);
+      setIsLoading(false);
+    })
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -66,7 +79,7 @@ export default function ChatPage() {
   return (
     <main className="min-h-screen flex flex-col">
       <Navbar />
-      {cardTitle && <p className="text-center text-sm text-muted-foreground mb-4">Chat for: {cardTitle}</p>}
+      {agentId && <p className="text-center text-sm text-muted-foreground mb-4">Chat for: {agentId}</p>}
       <div className="flex-1 flex flex-col px-4 md:px-6 py-6 max-w-3xl mx-auto w-full">
         <Card className="flex-1 flex flex-col">
           <CardHeader>
