@@ -7,13 +7,14 @@ from google.cloud import aiplatform    # still fine
 from google.cloud.speech_v1 import SpeechClient
 from google.cloud.texttospeech_v1 import TextToSpeechClient
 import io
-from PyPDF2 import PdfReader 
+from PyPDF2 import PdfReader
 # import uuid, base64
 # from werkzeug.utils import secure_filename
 # import google.generativeai as genai
 import json
 
 from google import genai
+from google.genai import types 
 
 import io
 
@@ -44,7 +45,7 @@ KEY_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "hackathon/Backend/speech
 speech_client = SpeechClient.from_service_account_file(KEY_PATH)
 tts_client    = TextToSpeechClient.from_service_account_file(KEY_PATH)
 
-ALLOWED_TEXT_DOCS = {"txt", "pdf"}
+ALLOWED_TEXT_DOCS = {"txt", "pdf","wav","mp3"}
 
 def extract_text_from_files(files):
     """
@@ -68,7 +69,7 @@ def extract_text_from_files(files):
             f.seek(0)                    # reset pointer in case you re‑use it
             text_chunks.append(raw.decode("utf-8", errors="ignore"))
 
-        elif suffix == "pdf":
+        if suffix == "pdf":
             # PyPDF2 can take the file‑object directly
             reader = PdfReader(f)
             pages_text = [
@@ -76,6 +77,35 @@ def extract_text_from_files(files):
             ]
             text_chunks.append("\n".join(pages_text))
             f.seek(0)                    # same reason as above
+        if suffix == "wav":
+            audio_bytes = f.read()
+            # print("this is myfile", myfile)
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[
+                    "Transcribe this audio clip exactly",
+                    types.Part.from_bytes(data=audio_bytes, mime_type="audio/wav"),
+                        ],
+                    )
+            
+        if suffix == "mp3":
+            audio_bytes = f.read()
+            # print("this is myfile", myfile)
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=[
+                    "Transcribe this audio clip exactly",
+                    types.Part.from_bytes(data=audio_bytes, mime_type="audio/mp3"),
+                        ],
+                    )
+
+            text_chunks.append(response.text.strip())
+        
+        if suffix == "mp4":
+
+            print(response.text)
+
+            
 
     return "\n".join(text_chunks)
 
