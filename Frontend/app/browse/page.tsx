@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar"
 import Filters from "@/components/filters"
 import ModelCard from "@/components/model-card"
 import { Button } from "@/components/ui/button"
-import { agents } from "@/agents"
+import { agents } from "@/data/agents"
 
 export default function BrowsePage() {
   return (

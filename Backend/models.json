@@ -1,0 +1,66 @@
+{ "agents": 
+    [{
+      "id": 0,
+      "title": "Albert",
+      "description": "I'm an old man",
+      "rating": 4.8,
+      "imageSrc": "/images/old.webp",
+      "category": "Image"
+    },
+    {
+      "id": 1,
+      "title": "Code Assistant",
+      "description": "Get help with coding tasks and debugging.",
+      "rating": 4.5,
+      "imageSrc": "/images/girl.webp",
+      "category": "Text"
+    },
+    {
+      "id": 2,
+      "title": "Artist",
+      "description": "Explore creative ideas and get inspired.",
+      "rating": 4.9,
+      "imageSrc": "/images/artist.webp",
+      "category": "Code"
+    },
+    {
+      "id": 3,
+      "title": "Dr. Magnus",
+      "description": "Got a stomach ache?",
+      "rating": 4.6,
+      "imageSrc": "/images/hat.webp",
+      "category": "Audio"
+    },
+    {
+      "id": 4,
+      "title": "Image Classifier",
+      "description": "identify objects and scenes in images",
+      "rating": 4.3,
+      "imageSrc": "/images/old.webp",
+      "category": "Image"
+    },
+    {
+      "id": 5,
+      "title": "Language Translator",
+      "description": "Translate text between multiple languages",
+      "rating": 4.7,
+      "imageSrc": "/images/girl.webp",
+      "category": "Text"
+    },
+    {
+      "id": 6,
+      "title": "Data Analyzer",
+      "description": "Extract insights from complex datasets",
+      "rating": 4.4,
+      "imageSrc": "/images/artist.webp",
+      "category": "Data"
+    },
+    {
+      "id": 7,
+      "title": "Speech Recognition",
+      "description": "Convert spoken language into written text",
+      "rating": 4.2,
+      "imageSrc": "/images/hat.webp",
+      "category": "Audio"
+    }]
+}
