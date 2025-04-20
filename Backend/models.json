@@ -5,7 +5,8 @@
       "description": "I'm an old man",
       "rating": 4.8,
       "imageSrc": "/images/old.webp",
-      "category": "Image"
+      "category": "Image",
+      "systemPropmt": "Your name is Albert. You are a old man. Please answer all questions like you are an old man named albert."
     },
     {
       "id": 1,
@@ -13,7 +14,8 @@
       "description": "Get help with coding tasks and debugging.",
       "rating": 4.5,
       "imageSrc": "/images/girl.webp",
-      "category": "Text"
+      "category": "Text",
+      "systemPropmt": "You are a skilled female coding assistant. Please think through the user's question and respond carefully. Ask clarifying questions if you need to."
     },
     {
       "id": 2,
@@ -21,7 +23,8 @@
       "description": "Explore creative ideas and get inspired.",
       "rating": 4.9,
       "imageSrc": "/images/artist.webp",
-      "category": "Code"
+      "category": "Code",
+      "systemPropmt": "You are an extremely creative artist. Your biggest inspiration is Jane Remover. Your task is to provide creative inspiration and answer questions as if you were a creative artist."
     },
     {
       "id": 3,
@@ -29,7 +32,8 @@
       "description": "Got a stomach ache?",
       "rating": 4.6,
       "imageSrc": "/images/hat.webp",
-      "category": "Audio"
+      "category": "Audio",
+      "systemPropmt": "You are a doctor named Dr. Magnus. You are a very friendly and helpful doctor. Please give accurate medical advice to the best of your ability."
     },
     {
       "id": 4,
@@ -37,7 +41,8 @@
       "description": "identify objects and scenes in images",
       "rating": 4.3,
       "imageSrc": "/images/old.webp",
-      "category": "Image"
+      "category": "Image",
+      "systemPropmt": "prompt"
     },
     {
       "id": 5,
@@ -45,7 +50,8 @@
       "description": "Translate text between multiple languages",
       "rating": 4.7,
       "imageSrc": "/images/girl.webp",
-      "category": "Text"
+      "category": "Text",
+      "systemPropmt": "prompt"
     },
     {
       "id": 6,
@@ -53,7 +59,8 @@
       "description": "Extract insights from complex datasets",
       "rating": 4.4,
       "imageSrc": "/images/artist.webp",
-      "category": "Data"
+      "category": "Data",
+      "systemPropmt": "prompt"
     },
     {
       "id": 7,
@@ -61,6 +68,7 @@
       "description": "Convert spoken language into written text",
       "rating": 4.2,
       "imageSrc": "/images/hat.webp",
-      "category": "Audio"
+      "category": "Audio",
+      "systemPropmt": "prompt"
     }]
 }

@@ -6,9 +6,10 @@ from google.cloud import aiplatform, speech, texttospeech
 from google.cloud import aiplatform    # still fine
 from google.cloud.speech_v1 import SpeechClient
 from google.cloud.texttospeech_v1 import TextToSpeechClient
-import uuid, base64
-from werkzeug.utils import secure_filename
-import google.generativeai as genai
+# import uuid, base64
+# from werkzeug.utils import secure_filename
+# import google.generativeai as genai
+import json
 
 from google import genai
 
@@ -32,7 +33,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Initialize Flask and CORS
 app = Flask(__name__)
-CORS(app, origins=os.getenv("FRONTEND_ORIGIN"))
+CORS(app)
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'speechtotext-434102-68275541f3c5copy.json'
 
@@ -66,6 +67,14 @@ def transcribe_audio(audio_file):
     transcript = " ".join(r.alternatives[0].transcript for r in response.results)
     return transcript
 
+def get_system_prompt(agent_id):
+    with open("models.json", "r") as f:
+        models_data = json.load(f)
+    for agent in models_data.get("agents", []):
+        if agent.get("id") == agent_id:
+            return agent.get("systemPropmt", "").strip()
+    return None
+
 @app.route("/chat", methods=["POST"])
 def chat():
     """
@@ -74,31 +83,48 @@ def chat():
     For JSON payload:
       {
         "message": "<user message>",
-        "systemPrompt": "<system instruction>"
+        "agentId": "<agent id>"
       }
 
     For multipart/form-data (voice):
       - form field "audio": file blob
-      - form field "systemPrompt": text
+      - form field "agentId": text (agent id)
     """
     # Determine if audio or text
     if request.content_type.startswith('multipart/form-data') and 'audio' in request.files:
         # Voice path: transcribe first
-        system_prompt = request.form.get('systemPrompt', '').strip()
-        audio_file = request.files['audio']
+        agent_id_str = request.form.get('agentId', '').strip()
+        if not agent_id_str:
+            return jsonify({"error": "Missing 'agentId' in form"}), 400
+        try:
+            agent_id = int(agent_id_str)
+        except ValueError:
+            return jsonify({"error": "Invalid 'agentId' value"}), 400
+
+        system_prompt = get_system_prompt(agent_id)
         if not system_prompt:
-            return jsonify({"error": "Missing 'systemPrompt' in form"}), 400
+            return jsonify({"error": f"No system prompt found for agent id {agent_id}"}), 400
+
+        audio_file = request.files['audio']
         transcript = transcribe_audio(audio_file)
         user_message = transcript.strip()
     else:
         # Text path: expect JSON
         data = request.get_json() or {}
-        system_prompt = data.get('systemPrompt', '').strip()
+        agent_id = data.get('agentId')
+        if agent_id is None:
+            return jsonify({"error": "Missing 'agentId' in JSON payload"}), 400
+        try:
+            agent_id = int(agent_id)
+        except ValueError:
+            return jsonify({"error": "Invalid 'agentId' value"}), 400
+
+        system_prompt = get_system_prompt(agent_id)
+        if not system_prompt:
+            return jsonify({"error": f"No system prompt found for agent id {agent_id}"}), 400
         user_message  = data.get('message', '').strip()
 
     # Validate
-    if not system_prompt:
-        return jsonify({"error": "Missing 'systemPrompt' parameter"}), 400
     if not user_message:
         return jsonify({"error": "Missing 'message' or valid audio input"}), 400
 
