@@ -1,9 +1,6 @@
 Advise.me 📚✨
 A community‑powered, multimodal advice platform that makes advanced AI feel as easy as texting a friend.
-
-<p align="center"> <img src="https://raw.githubusercontent.com/your‑org/advise.me/main/docs/hero.png" alt="Advise.me hero" width="650"> </p>
-
- 
+___________________________________________________________________________________________________________________________________________________________________________________________________
 
 🚨 Problem Statement
 AI tools are powerful but rarely arrive in a turnkey package—especially for people who aren’t steeped in the jargon or tooling. How can we make AI approachable for absolutely anyone, whatever their use case?
