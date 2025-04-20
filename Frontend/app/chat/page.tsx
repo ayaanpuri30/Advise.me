@@ -198,7 +198,7 @@ export default function ChatPage() {
                   <Plus className="h-4 w-4" />
                 </Button>
                 <Button onClick={handleSendMessage} disabled={isLoading || !input.trim()}>
-                  <SendIcon className="h-4 w-4" />
+                  <SendIcon className="h-4  w-4" />
                   <span className="sr-only">Send</span>
                 </Button>
               </div>
